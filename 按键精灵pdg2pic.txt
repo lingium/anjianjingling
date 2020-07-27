@@ -1,0 +1,43 @@
+For i = 1 to 100
+
+ start = Plugin.Window.Foreground()
+ start1 = Plugin.Window.FindEx(start, 0, 0, "&4、开始转换")
+ Call Plugin.Window.Active(start1)
+ Delay 1000
+ Call Plugin.Window.SendKeyPress(start1, 13)//点击开始转换
+ Delay 1000
+
+ //然后每隔2秒查询最前面窗口是否有转换完毕的子窗口
+Do Until HwndEx > 0
+  Hwnd = Plugin.Window.Foreground()
+  HwndEx = Plugin.Window.FindEx(Hwnd, 0, 0, "转换完毕。")//MsgBox "查找到的子窗口句柄为："& HwndEx
+  Delay 2000
+Loop
+ HwndEx = 0
+ Call Plugin.Window.SendKeyPress(Hwnd, 13)
+ Delay 1000
+
+ //从打开文件夹到重新选择并确定
+ Call Plugin.Window.Active(1246640)
+ Delay 1000
+ Call Plugin.Bkgnd.LeftClick(1246640, 18, 10)
+ Delay 1000
+ KeyPress "Down", 1
+ Delay 2000
+ KeyPress "Enter", 1
+ Delay 3000
+ //接下来要跳出格式统计
+
+Do Until HwndEx2 > 0
+ Hwnd = Plugin.Window.Foreground()
+ HwndEx2 = Plugin.Window.FindEx(Hwnd, 0, 0, "确定")//MsgBox "查找到的子窗口句柄为："& HwndEx2
+ Delay 1000
+Loop
+ HwndEx2 = 0
+ Hwnd = Plugin.Window.Foreground()
+ Call Plugin.Window.Active(Hwnd)
+ Call Plugin.Window.SendKeyPress(Hwnd, 13)//按下格式统计
+ Delay 1000
+
+
+Next
